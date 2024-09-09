@@ -93,4 +93,13 @@ export default class CartController {
             res.sendError(error);
         }
     }
+
+    async purchase(req, res){
+        try {
+            const purchaseData = await this.#cartService.finalizePurchase(req.params.cid);
+            res.sendSuccess200(purchaseData);
+        } catch (error) {
+            res.sendError(error);
+        }
+    }
 }

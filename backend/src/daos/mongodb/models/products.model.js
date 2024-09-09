@@ -10,7 +10,7 @@ const productSchema = new Schema({
     code: { type: Number, unique: true, required: true },
     price: { type: Number, min: 10, max: 100000, required: true },
     status: { type: Boolean, default: true },
-    stock: { type: Number, min: 1, required: true },
+    stock: { type: Number, min: 0, required: true },
     thumbnail: { type: String, required: true },
 }, { versionKey: false });
 

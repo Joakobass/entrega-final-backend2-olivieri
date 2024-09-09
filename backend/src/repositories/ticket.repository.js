@@ -32,7 +32,9 @@ export default class TicketRepository {
     }
 
     async save(data) {
+
         const ticketDTO = this.#ticketDTO.fromData(data);
+        console.log(ticketDTO);
         const ticket = await this.#ticketDAO.save(ticketDTO);
         return this.#ticketDTO.fromModel(ticket);
     }

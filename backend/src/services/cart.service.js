@@ -1,11 +1,17 @@
 import { ERROR_NOT_FOUND_ID } from "../constants/messages.constant.js";
 import CartRepository from "../repositories/cart.repository.js";
+import ProductRepository from "../repositories/product.repository.js";
+import TicketRepository from "../repositories/ticket.repository.js";
 
 export default class CartService {
     #cartRepository;
+    #productRepository;
+    #ticketRepository;
 
     constructor (){
         this.#cartRepository = new CartRepository();
+        this.#productRepository = new ProductRepository();
+        this.#ticketRepository = new TicketRepository();
     }
 
     async findAll() {
@@ -92,4 +98,40 @@ export default class CartService {
         return cart;
     }
 
+    async finalizePurchase(cartId) {
+        const cart = await this.#cartRepository.findOneById(cartId);
+
+        let totalAmount = 0;
+        const productsNotPurchased = [];
+
+        for (const cartItem of cart.products) {
+
+            const product = cartItem.product;
+            const quantityInCart = cartItem.quantity;
+
+            const productFromDb = await this.#productRepository.findOneById(product._id);
+
+            if (productFromDb.stock >= quantityInCart) {
+                productFromDb.stock -= quantityInCart;
+                totalAmount += productFromDb.price * quantityInCart;
+                await this.#productRepository.save(productFromDb);
+            } else {
+                productsNotPurchased.push(product._id);
+            }
+        }
+
+        cart.products = cart.products.filter((cartItem) => productsNotPurchased.includes(cartItem.product._id));
+        await this.#cartRepository.save(cart);
+
+        const data = {
+            amount: totalAmount,
+            purchaser: "adas",
+        };
+
+        if (totalAmount > 0) {
+            await this.#ticketRepository.save(data);
+        }
+
+        return { totalAmount, productsNotPurchased, cart };
+    }
 }

@@ -18,6 +18,7 @@ export default class CartRouter extends BaseRouter {
         this.addGetRoute("/:cid", [ ADMIN, STANDARD ], (req, res) => this.#cartController.getCartById(req, res));
         this.addPostRoute("/", [ STANDARD, ADMIN ], (req, res) => this.#cartController.create(req, res));
         this.addPostRoute("/:cid/product/:pid", [ STANDARD, ADMIN ], (req, res) => this.#cartController.addProductToCart(req, res));
+        this.addPostRoute("/:cid/purchase", [ STANDARD, ADMIN ], (req, res) => this.#cartController.purchase(req, res));
         this.addDeleteRoute("/:cid/product/:pid", [ STANDARD, ADMIN ], (req, res) => this.#cartController.deleteProductToCart(req, res));
         this.addDeleteRoute("/:cid", [ADMIN], (req, res) => this.#cartController.delete(req, res));
         this.addPostRoute("/:cid", [ STANDARD, ADMIN ], (req, res) => this.#cartController.removeAllProducts(req, res));

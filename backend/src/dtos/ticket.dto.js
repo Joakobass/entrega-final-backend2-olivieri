@@ -11,7 +11,6 @@ export default class TicketDTO {
     fromData(data) {
         return {
             id: data.id || null,
-            code: Number(date.code),
             amount: Number(model.amount),
             purcharser: model.purcharser.toLowerCase(),
         };

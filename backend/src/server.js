@@ -9,12 +9,6 @@ import { config as configPassport } from "./config/passport.config.js";
 import { config as configCORS } from "./config/cors.config.js";
 import { connectDB } from "./config/mongoose.config.js";
 
-// import cartsRouter from "./routes/api.carts.router.js";
-// import homeRouter from "./routes/home.routes.js";
-import sessionsRouter from "./routes/sessions.routes.js";
-import productsViewRouter from "./routes/app.products.router.js";
-import cartViewRouter from "./routes/app.cart.router.js";
-
 import ProductRouter from "./routers/api/products.router.js";
 import AuthRouter from "./routers/api/auth.router.js";
 import HomeRouter from "./routers/home.router.js";
@@ -47,8 +41,6 @@ server.use(express.static(paths.public));
 configHandlebars(server);
 
 // Enrutadores
-//server.use("/", productsViewRouter);
-//server.use("/", cartViewRouter);
 server.use("/", new HomeRouter().getRouter());
 server.use("/api/products", new ProductRouter().getRouter());
 server.use("/api/sessions", new AuthRouter().getRouter());

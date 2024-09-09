@@ -4,15 +4,14 @@ export default class TicketDTO {
             id: model.id,
             code: model.code,
             amount: model.amount,
-            purcharser: model.purcharser,
+            purchaser: model.purchaser,
         };
     }
 
     fromData(data) {
         return {
-            id: data.id || null,
-            amount: Number(model.amount),
-            purcharser: model.purcharser.toLowerCase(),
+            amount: data.amount ? Number(data.amount) : null,
+            purchaser: data.purchaser ? data.purchaser : null,
         };
     }
 }

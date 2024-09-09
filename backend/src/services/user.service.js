@@ -25,7 +25,27 @@ export default class UserService {
     }
 
     async insertOne(data) {
+
         return await this.#userRepository.save(data);
+    }
+
+    async addCart(idCart, idUser){
+        const user = await this.findOneById(idUser);
+        const cartExists = user.cart.some((cartItem) => cartItem.cart.toString() === idCart.toString());
+        if(!cartExists){
+
+            user.cart.push({ cart: idCart });
+        } else {
+            return user;
+        }
+
+        const data = {
+            id: user.id,
+            cart: user.cart,
+        };
+
+        return await this.#userRepository.save(data);
+
     }
 
     async updateOneById(id, data){

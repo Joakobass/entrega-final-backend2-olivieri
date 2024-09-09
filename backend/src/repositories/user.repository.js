@@ -14,7 +14,6 @@ export default class UserRepository {
         this.#userDTO = new UserDTO();
     }
 
-    // Obtener todos los useros aplicando filtros
     async findAll(paramFilters) {
 
         const $and = [];
@@ -32,7 +31,6 @@ export default class UserRepository {
         return users;
     }
 
-    // Obtener un usero por su ID
     async findOneById(id) {
         const user = await this.#userDAO.findOneById(id);
         if (!user) throw new Error(ERROR_NOT_FOUND_ID);
@@ -52,15 +50,15 @@ export default class UserRepository {
         return this.#userDTO.fromModel(user);
     }
 
-    // Crea o actualiza una nueva mascota
     async save(data) {
-
         const userDTO = this.#userDTO.fromData(data);
+
+        console.log(userDTO);
         const user = await this.#userDAO.save(userDTO);
+
         return this.#userDTO.fromModel(user);
     }
 
-    // Eliminar una mascota por su ID
     async deleteOneById(id) {
         const user = await this.findOneById(id);
         await this.#userDAO.deleteOneById(id);

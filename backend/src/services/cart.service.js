@@ -98,8 +98,9 @@ export default class CartService {
         return cart;
     }
 
-    async finalizePurchase(cartId) {
+    async finalizePurchase(cartId, userEmail) {
         const cart = await this.#cartRepository.findOneById(cartId);
+        let ticket;
 
         let totalAmount = 0;
         const productsNotPurchased = [];
@@ -125,13 +126,13 @@ export default class CartService {
 
         const data = {
             amount: totalAmount,
-            purchaser: "adas",
+            purchaser: userEmail,
         };
 
         if (totalAmount > 0) {
-            await this.#ticketRepository.save(data);
+            ticket = await this.#ticketRepository.save(data);
         }
 
-        return { totalAmount, productsNotPurchased, cart };
+        return { productsNotPurchased, ticket };
     }
 }

@@ -95,8 +95,9 @@ export default class CartController {
     }
 
     async purchase(req, res){
+
         try {
-            const purchaseData = await this.#cartService.finalizePurchase(req.params.cid);
+            const purchaseData = await this.#cartService.finalizePurchase(req.params.cid, req.user.email);
             res.sendSuccess200(purchaseData);
         } catch (error) {
             res.sendError(error);

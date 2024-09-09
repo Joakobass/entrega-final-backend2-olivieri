@@ -6,10 +6,10 @@ import { generateNumber } from "../../../utils/random.js";
 const ticketCollection = "tickets";
 
 const ticketSchema = new Schema({
-    code: { type: Number, unique: true, required: true },
-    purchase_datetime: { type: Date, require: true },
+    code: { type: Number, unique: true },
+    purchase_datetime: { type: Date },
     amount: { type: Number, min: 10, max: 100000, required: true },
-    purcharser: { type: String, require: true },
+    purchaser: { type: String, required: true },
 }, { versionKey: false });
 
 ticketSchema.pre("save", function(next){
@@ -18,8 +18,9 @@ ticketSchema.pre("save", function(next){
     }
 
     if(!this.purchase_datetime){
-        this.purchase_datetime = Date.now();
+        this.purchase_datetime = new Date();
     }
+
     next();
 });
 

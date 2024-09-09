@@ -38,6 +38,7 @@ export default class MongoDAO {
             return await this.#model.findByIdAndUpdate(data.id, data, { runValidators: true });
         } else {
             const object = new this.#model(data);
+
             return await object.save();
         }
     }

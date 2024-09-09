@@ -36,6 +36,16 @@ export default class UserController {
         }
     }
 
+    async addCartToUser(req, res){
+        try {
+
+            const user = await this.#userService.addCart(req.params.cid, req.user.id);
+            res.sendSuccess201(user);
+        } catch (error) {
+            res.sendError(error);
+        }
+    }
+
     async update(req, res) {
         try {
             const user = await this.#userService.updateOneById(req.params.uid, req.body);

@@ -51,12 +51,22 @@ export default class UserRepository {
     }
 
     async save(data) {
+
         const userDTO = this.#userDTO.fromData(data);
 
-        console.log(userDTO);
         const user = await this.#userDAO.save(userDTO);
 
         return this.#userDTO.fromModel(user);
+    }
+
+    async updateUserCart(data){
+        const user = await this.#userDAO.findOneById(data.id);
+        user.cart = data.cart;
+        const userDTO = this.#userDTO.fromData(user);
+
+        const userUpdate = await this.#userDAO.save(userDTO);
+
+        return this.#userDTO.fromModel(userUpdate);
     }
 
     async deleteOneById(id) {

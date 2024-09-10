@@ -2,6 +2,7 @@ export default class MongoDAO {
     #model;
 
     constructor(model) {
+
         this.#model = model;
 
     }
@@ -35,6 +36,7 @@ export default class MongoDAO {
     async save(data) {
 
         if (data.id) {
+
             return await this.#model.findByIdAndUpdate(data.id, data, { runValidators: true });
         } else {
             const object = new this.#model(data);

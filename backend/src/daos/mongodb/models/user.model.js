@@ -45,11 +45,11 @@ const userSchema = new Schema({
         type: Number,
         required: [ true, "La edad es obligatoria" ],
     },
-    cart:[{
+    cart:{
         type: Schema.Types.ObjectId,
         ref: "carts",
-        default: " ",
-    }],
+        default: [],
+    },
     roles: {
         type: [String],
         uppercase: true,

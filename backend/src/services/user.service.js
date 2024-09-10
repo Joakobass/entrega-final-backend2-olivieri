@@ -31,20 +31,21 @@ export default class UserService {
 
     async addCart(idCart, idUser){
         const user = await this.findOneById(idUser);
-        const cartExists = user.cart.some((cartItem) => cartItem.cart.toString() === idCart.toString());
-        if(!cartExists){
+        //const cartExists = user.cart.some((cartItem) => cartItem.cart.toString() === idCart.toString());
+        // if(!cartExists){
 
-            user.cart.push({ cart: idCart });
-        } else {
-            return user;
-        }
+        //     user.cart.push({ cart: idCart });
+        // } else {
+        //     return user;
+        // }
+        user.cart = idCart;
 
         const data = {
             id: user.id,
             cart: user.cart,
         };
 
-        return await this.#userRepository.save(data);
+        return await this.#userRepository.updateUserCart(data);
 
     }
 
